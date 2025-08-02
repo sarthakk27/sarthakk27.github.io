@@ -16,7 +16,7 @@ const Blog = () => {
         <br />
         <Circle className="inline mr-2" size={5} />
         <Link href="/blog/hackNUthon" style={{textDecoration:'underline', textDecorationColor: 'rgba(128, 128, 128, 0.8)' }}>
-          Innovation Village
+          LJ Innovation Village
         </Link>
         <br />
         <Circle className="inline mr-2" size={5} />

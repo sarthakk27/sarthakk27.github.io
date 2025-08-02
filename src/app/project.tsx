@@ -10,8 +10,8 @@ const Projects = () => {
       </h3>
       <span className="rounded-full">
         <Circle className="inline mr-2" size={5} />
-        <Link href="/blog/hackNUthon" style={{textDecoration:'underline', textDecorationColor: 'rgba(128, 128, 128, 0.8)' }} >
-          Promocarft
+        <Link href="/project/promocraft" style={{textDecoration:'underline', textDecorationColor: 'rgba(128, 128, 128, 0.8)' }} >
+          Promocarft - a simple way to design
         </Link>
         <br />
         <Circle className="inline mr-2" size={5} />

@@ -10,7 +10,7 @@ const page = () => {
     <div>
       <ThemeToggleButton />
       <div style={{paddingLeft:'185px'}}>
-        <div style={{width:'50%', paddingTop:'-30px'}}>
+        <div style={{width:'100%', paddingTop:'-30px'}}>
           <h1 style={{fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol", fontSize:'50px'}}>sarthak </h1>
         </div>
         <hr style={{opacity:'0.09', width:"80%"}} />
