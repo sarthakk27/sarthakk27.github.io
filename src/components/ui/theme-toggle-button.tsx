@@ -72,23 +72,32 @@ export default function ThemeToggleButton({
         onClick={toggleTheme}
         variant="ghost"
         size="icon"
-        className="left-[97%] w-9  h-9 pt-4 relative group"
+        className="absolute right-4 top-4 group 
+               cursor-pointer hover:cursor-pointer
+               text-foreground hover:text-foreground
+               hover:bg-accent/80 transition-all duration-200 active:scale-95"
         name="Theme Toggle Button"
       >
         {theme === "dark" ? (
-          <MoonIcon className="size-[1.7rem] transition-all" />
+          <MoonIcon className="size-[1.7rem] transition-all cursor-pointer" />
         ) : (
-          <SunIcon className="size-[1.8rem] transition-all" />
+          <SunIcon className="size-[1.8rem] transition-all cursor-pointer" />
         )}
-        <span className="sr-only">Theme Toggle </span>
+        <span className="sr-only">Theme Toggle</span>
         {showLabel && (
           <>
-            <span className="hidden group-hover:block border rounded-full px-2 absolute -top-10">
-              {" "}
+            <span className="hidden group-hover:block 
+                           bg-popover text-popover-foreground 
+                           border border-border rounded-full px-2 py-1 text-xs
+                           absolute -top-12 left-1/2 transform -translate-x-1/2 
+                           whitespace-nowrap shadow-md z-10">
               variant = {variant}
             </span>
-            <span className="hidden group-hover:block border rounded-full px-2 absolute -bottom-10">
-              {" "}
+            <span className="hidden group-hover:block 
+                           bg-popover text-popover-foreground 
+                           border border-border rounded-full px-2 py-1 text-xs
+                           absolute -bottom-12 left-1/2 transform -translate-x-1/2 
+                           whitespace-nowrap shadow-md z-10">
               start = {start}
             </span>
           </>
