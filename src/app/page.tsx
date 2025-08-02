@@ -3,6 +3,7 @@ import FlipLink from '@/components/ui/text-effect-flipper';
 import ThemeToggleButton from '@/components/ui/theme-toggle-button';
 import React from 'react';
 import Blog from './blog';
+import Projects from './project';
 
 const page = () => {
   return (
@@ -14,9 +15,11 @@ const page = () => {
         </div>
         <hr style={{opacity:'0.09', width:"80%"}} />
         <br />
-        <div style={{paddingLeft:'2px',paddingBottom:'20px', wordWrap:'normal',width:'75%',fontFamily:"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol"}}>full stack developer & problem solver <br /> code, chill, repeat </div>
+        <div style={{paddingLeft:'2px', wordWrap:'normal',width:'75%',fontFamily:"-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol"}}>full stack developer & problem solver <br /> code, chill, repeat </div>
+        <br />
         <hr style={{opacity:'0.1', width:"80%",}} />
         
+        <Projects/>
         <Blog/>
         {/* <FlipLink href="https://www.linkedin.com/in/rathor-sarthak-b76277357/">
             LINKEDIN

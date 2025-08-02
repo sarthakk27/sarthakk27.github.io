@@ -1,6 +1,6 @@
 import React from "react";
 
-const Project = () => {
+const BlogFlder = () => {
   return (
     <div>
   
@@ -10,4 +10,4 @@ const Project = () => {
     </div>
   );
 }
-export default Project; 
+export default BlogFlder; 
