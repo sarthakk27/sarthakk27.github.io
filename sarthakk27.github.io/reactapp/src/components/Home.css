@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'CodeSaver';
+  src: url('../CodeSaver/CodeSaver-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#greeting {
+  font-family: 'CodeSaver', sans-serif;
+  font-size: 50px;
+}
+
+.print-green {
+  color: green;
+}
+
+.black {
+  color: rgb(3, 3, 3);
+}
+
+a {
+  font-size: 25px;
+  color: rgb(24, 106, 238);
+}
+
+.home-container {
+  padding: 20px;
+}

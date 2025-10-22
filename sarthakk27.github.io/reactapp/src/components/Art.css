@@ -1,0 +1,17 @@
+.art-container img {
+  width: 300px;
+  height: 300px;
+}
+
+.art-container #eye {
+  width: 20%;
+  height: 20%;
+}
+
+.art-container #description {
+  font-size: x-large;
+}
+
+.art-container {
+  padding: 20px;
+}
