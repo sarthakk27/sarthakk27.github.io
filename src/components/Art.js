@@ -1,8 +1,8 @@
 import React from 'react';
 import './Art.css';
-import glitchArt from '../Art/glitch art.jpg';
+import glitchArt from '../Art/glitch-art.jpg';
 import eyeImg from '../Art/eye.avif';
-import stuckImg from '../Art/i am stuck.avif';
+import stuckImg from '../Art/i-am-stuck.avif';
 
 const Art = () => {
   return (
