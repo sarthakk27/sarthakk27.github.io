@@ -9,7 +9,7 @@ const Movies = () => {
         also, here is my{' '}
         <span>
           <a
-            href="https://letterboxd.com/sarthaakkk/"
+            href="https://letterboxd.com/sarthaakk/"
             target="_blank"
             rel="noopener noreferrer"
           >
