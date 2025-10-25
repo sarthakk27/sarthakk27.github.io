@@ -6,10 +6,10 @@ const Home = () => {
     <div className="home-container">
       <p id="greeting">
         <span className="print-green">print(</span>
-        <span className="black">' hey there, iamsarthak '</span>
+        <span className="black">'hey there, iamsarthak'</span>
         <span className="print-green">)</span>
       </p>
-      <span style={{ fontSize: 'larger' }}>i am a full stack developer.</span>
+      <span style={{ fontSize: 'larger' }}>i am a developer.</span>
       <br />
       <span style={{ fontSize: 'larger' }}>
         find me at{' '}
@@ -40,7 +40,7 @@ const Home = () => {
       <a href="/movies">Interest in movies</a>
       <br />
       <br />
-      <h1>Projects</h1>
+      <a href="/projects">Projects</a>
     </div>
   );
 };
