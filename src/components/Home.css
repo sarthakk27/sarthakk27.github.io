@@ -8,6 +8,27 @@
 #greeting {
   font-family: 'CodeSaver', sans-serif;
   font-size: 50px;
+  position: relative;
+  display: inline-block;
+  transition: filter 0.3s ease, text-shadow 0.3s ease;
+}
+
+.terminal-text:hover {
+  filter: brightness(1.2);
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.6),
+               0 0 12px rgba(0, 255, 0, 0.4),
+               0 0 16px rgba(0, 255, 0, 0.2);
+}
+
+.cursor {
+  color: green;
+  opacity: 0;
+  transition: opacity 0.1s;
+  margin-left: 2px;
+}
+
+.cursor.visible {
+  opacity: 1;
 }
 
 .print-green {
@@ -25,4 +46,53 @@ a {
 
 .home-container {
   padding: 20px;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Linux Terminal Theme */
+.home-container.linux-theme {
+  background-color: #0c0c0c;
+  color: #00ff00;
+  font-family: 'Courier New', 'Consolas', monospace;
+  min-height: 100vh;
+}
+
+.home-container.linux-theme #greeting {
+  color: #00ff00;
+}
+
+.home-container.linux-theme .print-green {
+  color: #00ff00;
+}
+
+.home-container.linux-theme .black {
+  color: #00ff00;
+}
+
+.home-container.linux-theme a {
+  color: #33ff33;
+  text-decoration: underline;
+}
+
+.home-container.linux-theme a:hover {
+  color: #66ff66;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.home-container.linux-theme .hint-text {
+  color: #00aa00;
+}
+
+.home-container.linux-theme .cursor {
+  color: #00ff00;
+}
+
+.hint-text {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
 }

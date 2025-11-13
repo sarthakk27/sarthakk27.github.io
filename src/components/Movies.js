@@ -4,7 +4,7 @@ import './Movies.css';
 const Movies = () => {
   return (
     <div className="movies-container">
-      <p>movies i like</p>
+      <p>i am a total movie junkie. i am all in for suspense, thrillers, action, and solid drama. throw in a good horror flick and i am hooked. just can’t stand those predictable ones or movies that start fire and end flat.</p>
       <p>
         also, here is my{' '}
         <span>
