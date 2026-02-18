@@ -1,3 +1,18 @@
+// ============================================
+// BLOG POSTS DATA
+// ============================================
+// To add a new blog post, see BLOG_GUIDE.md in the root directory
+// Or check blogExample.js for a complete example
+
+// Import helper functions for easy formatting
+import { 
+  createImage, 
+  createHighlight, 
+  createSQLQuery, 
+  createCodeBlock, 
+  createInlineCode 
+} from './blogTemplate';
+
 export const blogPosts = [
   {
     slug: 'my-first-blog-post',
@@ -63,9 +78,11 @@ export const blogPosts = [
     excerpt: 'a step-by-step guide to connecting pentaho data integration with microsoft sql server for seamless data operations.',
     content: `
       <p>
-        [Add your introduction here - explain why connecting Pentaho with SQL Server is important 
-        and what readers will learn from this guide.]
+        connecting pentaho data integration to microsoft sql server is a fundamental task
+        for data engineers. this guide walks you through the complete process.
       </p>
+
+      ${createHighlight('💡 <strong>What you\'ll learn:</strong> JDBC driver setup, connection configuration, testing, and troubleshooting common issues.', 'info')}
 
       <h2>prerequisites</h2>
       
@@ -78,42 +95,47 @@ export const blogPosts = [
         <li>microsoft sql server instance running and accessible</li>
         <li>sql server jdbc driver (mssql-jdbc)</li>
         <li>database credentials (username, password, server address)</li>
-        <li>[Add any other prerequisites]</li>
       </ul>
 
       <h2>step 1: downloading the jdbc driver</h2>
       
       <p>
-        [Explain where to download the SQL Server JDBC driver and which version to choose]
+        download the microsoft jdbc driver for sql server from the official microsoft documentation.
+        get the latest stable version compatible with your java installation.
       </p>
 
-      <pre><code>// Example: Download URL or command
-// https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server</code></pre>
+      ${createCodeBlock(`# Download URL
+https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server
+
+# Recommended version
+mssql-jdbc-12.2.0.jre11.jar`, 'bash')}
 
       <h2>step 2: installing the jdbc driver in pentaho</h2>
       
       <p>
-        [Explain how to place the JDBC driver in the correct Pentaho directory]
+        place the jdbc driver in the correct pentaho directory:
       </p>
 
       <ul>
         <li>locate your pentaho installation directory</li>
-        <li>navigate to the lib folder: <code>/data-integration/lib</code></li>
+        <li>navigate to the lib folder: ${createInlineCode('/data-integration/lib')}</li>
         <li>copy the jdbc driver jar file to this directory</li>
-        <li>[Add specific steps]</li>
+        <li>restart pentaho spoon after copying the driver</li>
       </ul>
+
+      ${createHighlight('⚠️ <strong>Important:</strong> You must restart Pentaho Spoon after adding the JDBC driver for it to be recognized.', 'warning')}
 
       <h2>step 3: configuring the database connection</h2>
       
       <p>
-        [Walk through the process of creating a new database connection in Pentaho Spoon]
+        create a new connection in pentaho spoon:
       </p>
 
       <ol>
         <li>open pentaho data integration (spoon)</li>
         <li>click on "view" tab and right-click on "database connections"</li>
         <li>select "new" to create a new connection</li>
-        <li>[Continue with specific configuration steps]</li>
+        <li>fill in the connection details as shown below</li>
       </ol>
 
       <h2>connection settings</h2>
@@ -122,66 +144,79 @@ export const blogPosts = [
         here are the typical connection settings you'll need to configure:
       </p>
 
-      <pre><code>Connection Name: [Your connection name]
+      ${createCodeBlock(`Connection Name: SQLServerConnection
 Connection Type: MS SQL Server
 Access: Native (JDBC)
-Host Name: localhost (or your server address)
-Database Name: [Your database name]
-Port Number: 1433 (default SQL Server port)
-Username: [Your SQL Server username]
-Password: [Your SQL Server password]</code></pre>
+Host Name: localhost
+Database Name: YourDatabase
+Port Number: 1433
+Username: your_username
+Password: your_password`, 'text')}
 
       <h2>step 4: testing the connection</h2>
       
       <p>
-        [Explain how to test if the connection is working properly]
+        once configured, test your connection:
       </p>
 
       <ul>
         <li>click the "test" button in the database connection dialog</li>
         <li>verify that you see a success message</li>
-        <li>[Add troubleshooting tips if the connection fails]</li>
+        <li>if it fails, check the troubleshooting section below</li>
       </ul>
+
+      ${createHighlight('✅ <strong>Success!</strong> If the test passes, you\'re ready to start building transformations.', 'success')}
 
       <h2>common connection string format</h2>
       
-      <pre><code>jdbc:sqlserver://[serverName\\instanceName][:portNumber];
+      <p>
+        for advanced scenarios, you may need a custom connection string:
+      </p>
+
+      ${createSQLQuery(`jdbc:sqlserver://[serverName\\\\instanceName][:portNumber];
 databaseName=[databaseName];
 user=[userName];
-password=[password];</code></pre>
+password=[password];
+encrypt=true;
+trustServerCertificate=false;`)}
 
       <h2>troubleshooting common issues</h2>
       
       <h3>issue 1: driver not found</h3>
       <p>
-        [Explain how to resolve driver not found errors]
+        if you get a "driver not found" error, verify the jar file is in the correct directory
+        and that you restarted pentaho spoon.
       </p>
 
       <h3>issue 2: connection timeout</h3>
       <p>
-        [Explain how to handle timeout issues]
+        timeout issues usually indicate network problems or firewall blocking. check if sql server
+        is listening on the specified port and that your firewall allows the connection.
       </p>
+
+      ${createCodeBlock(`# Test if port is accessible
+telnet your-server 1433
+
+# Check if SQL Server is listening
+netstat -an | grep 1433`, 'bash')}
 
       <h3>issue 3: authentication failed</h3>
       <p>
-        [Explain authentication troubleshooting steps]
+        verify your credentials are correct and that sql server authentication is enabled
+        (not just windows authentication).
       </p>
 
       <h2>example transformation</h2>
       
       <p>
-        [Provide a simple example of reading data from SQL Server using the connection you just created]
+        test your connection with a simple query:
       </p>
 
-      <pre><code>// Example: Simple SELECT query
-SELECT 
-    column1,
-    column2,
-    column3
-FROM 
-    your_table
-WHERE 
-    condition = 'value';</code></pre>
+      ${createSQLQuery(`SELECT 
+    DB_NAME() as DatabaseName,
+    USER_NAME() as CurrentUser,
+    @@VERSION as SQLServerVersion,
+    GETDATE() as CurrentDateTime;`)}
 
       <h2>best practices</h2>
       
@@ -189,14 +224,18 @@ WHERE
         <li>always use connection pooling for better performance</li>
         <li>secure your credentials using pentaho's encryption features</li>
         <li>test your connection before deploying to production</li>
-        <li>[Add your own best practices]</li>
+        <li>monitor connection usage to avoid exhausting the pool</li>
+        <li>use parameterized queries to prevent sql injection</li>
       </ul>
+
+      ${createHighlight('🔐 <strong>Security Tip:</strong> Never hardcode production passwords. Use Pentaho\'s encryption or environment variables.', 'tip')}
 
       <h2>conclusion</h2>
       
       <p>
-        [Summarize what readers have learned and encourage them to try it out. 
-        Mention any additional resources or next steps.]
+        you now have a fully functional connection between pentaho and sql server. this forms
+        the foundation for building powerful etl workflows. in future posts, i'll cover advanced
+        topics like bulk loading and performance optimization.
       </p>
 
       <p>
