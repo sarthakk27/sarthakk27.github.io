@@ -5,13 +5,14 @@
 
 /**
  * Helper function to create an image block with consistent sizing
- * @param {string} src - Image URL or path (place images in src/Art/ folder)
+ * @param {string} src - Image URL or path (place images in public/photos/ folder)
  * @param {string} alt - Alt text for accessibility
  * @param {string} caption - Optional caption below the image
+ * @param {string} size - Image size: 'small' (300px), 'medium' (500px - default), 'large' (700px), 'full' (100%)
  */
-export const createImage = (src, alt, caption = '') => {
+export const createImage = (src, alt, caption = '', size = 'medium') => {
   return `
-    <figure class="blog-image">
+    <figure class="blog-image blog-image-${size}">
       <img src="${src}" alt="${alt}" />
       ${caption ? `<figcaption>${caption}</figcaption>` : ''}
     </figure>

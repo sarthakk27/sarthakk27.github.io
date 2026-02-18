@@ -162,10 +162,31 @@
   width: 100%;
   height: auto;
   max-height: 500px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 8px;
   border: 1px solid #e1e4e8;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Size Variants */
+.post-content .blog-image-small img {
+  max-height: 300px;
+  max-width: 300px;
+}
+
+.post-content .blog-image-medium img {
+  max-height: 500px;
+  max-width: 100%;
+}
+
+.post-content .blog-image-large img {
+  max-height: 700px;
+  max-width: 100%;
+}
+
+.post-content .blog-image-full img {
+  max-height: none;
+  max-width: 100%;
 }
 
 .post-content .blog-image figcaption {

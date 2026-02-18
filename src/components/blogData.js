@@ -5,6 +5,7 @@
 // Or check blogExample.js for a complete example
 
 // Import helper functions for easy formatting
+import { create } from 'canvas-confetti';
 import { 
   createImage, 
   createHighlight, 
@@ -93,22 +94,48 @@ export const blogPosts = [
       <ul>
         <li>pentaho data integration (kettle) installed on your system</li>
         <li>microsoft sql server instance running and accessible</li>
-        <li>sql server jdbc driver (mssql-jdbc)</li>
-        <li>database credentials (username, password, server address)</li>
+        <li>java version 11 installed on your system (note: pentaho works best with java version 11)</li>
       </ul>
 
-      <h2>step 1: downloading the jdbc driver</h2>
+      <h2>step 1: Open SQL Server Configuration Manager</h2>
+      <p><bold>Press Win + R, Then run:<bold></p>
+    
+      ${createCodeBlock(`SQL 2017 → SQLServerManager14.msc`, 'text')}
+      ${createCodeBlock(`SQL 2019 → SQLServerManager15.msc `, 'text')}
+      ${createCodeBlock(`SQL 2022 → SQLServerManager16.msc`, 'text')}
       
+
       <p>
-        download the microsoft jdbc driver for sql server from the official microsoft documentation.
-        get the latest stable version compatible with your java installation.
+        still, if any of the above commands don't work, you can manually navigate to the SQL Server Configuration Manager by navigating to the following directory in File Explorer:
       </p>
 
-      ${createCodeBlock(`# Download URL
-https://docs.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server
+      ${createCodeBlock(`C:\\Windows\\System32\\`, 'text')}
 
-# Recommended version
-mssql-jdbc-12.2.0.jre11.jar`, 'bash')}
+      <p>and search for:</p>
+      ${createCodeBlock(`SQLServerManager`, 'text')}
+      
+      <p>now, you will see this interface:</p> 
+      ${createImage('/photos/sqlServerManagerConfig.png', 'SQL Server Configuration Manager interface', 'SQL Server Configuration Manager showing network configuration options')}
+        
+      <p>go to 'Protocols for MSSQLServer'</p> 
+      <h2>step 2: Disable  Shared Memory</h2>
+      <p>Shared Memory protocol is enabled by default, but it can cause connection issues with Pentaho. To ensure a successful connection, we need to disable the Shared Memory protocol. Select Shared Memory and right click it to disable it</p>
+      ${createImage('/photos/sharedMemory.png', 'Shared Memory Protocol', 'Disable Shared Memory protocol')}
+    
+
+      <h2>step 3: Enable TCP/IP Protocol</h2>
+      <p>After disabling Shared Memory, we need to enable the TCP/IP protocol:</p>
+      ${createImage('/photos/tcpIp.png', 'TCP/IP Protocol', 'Enable TCP/IP protocol')}
+
+      <p>After enabling TCP/IP, right click on it and select <strong>'Properties'</strong>. In the properties window, go to the <strong>'IP Addresses'</strong> tab. Scroll down to the bottom and find the section for <strong>IPAll</strong>. In the TCP Port field, enter <strong>1433</strong> (the default port for SQL Server). Click <strong>OK</strong> to save the changes.</p>
+      ${createImage('/photos/tcpIpProperties.png', 'TCP/IP Properties', 'Set TCP Port to 1433 in TCP/IP properties', 'large')}
+
+      <h2>step 4: Restart SQL Server Services</h2>
+      <p>After making these changes, we need to restart the SQL Server services for the changes to take effect. In the SQL Server Configuration Manager, go to <strong>'SQL Server Services'</strong>. Right click on <strong>'SQL Server (MSSQLSERVER)'</strong> and select <strong>'Restart'</strong>.</p>
+      ${createImage('/photos/restartServices.png', 'Restart SQL Server Services', 'Restart SQL Server and SQL Server Browser services')}
+     
+     
+      <h2>step 5: Create a SQL Server User</h2>     
 
       <h2>step 2: installing the jdbc driver in pentaho</h2>
       
@@ -180,7 +207,7 @@ password=[password];
 encrypt=true;
 trustServerCertificate=false;`)}
 
-      <h2>troubleshooting common issues</h2>
+      <h2>troubleshooting common issues</h2> 
       
       <h3>issue 1: driver not found</h3>
       <p>

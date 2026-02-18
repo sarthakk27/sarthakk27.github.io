@@ -47,11 +47,32 @@ export const blogPosts = [
 
 ### 1. Images (Auto-sized)
 ```javascript
-${createImage('/path/to/image.jpg', 'Alt text', 'Optional caption')}
+${createImage('/photos/image.jpg', 'Alt text', 'Optional caption', 'medium')}
 ```
-- **Place images in:** `src/Art/` folder
-- All images automatically sized to max 500px height
-- Maintains aspect ratio
+
+**Size Options:**
+- `'small'` - Max 300px height (good for icons/small screenshots)
+- `'medium'` - Max 500px height (default, good for most images)
+- `'large'` - Max 700px height (good for detailed screenshots)
+- `'full'` - Full width, no height limit (use sparingly)
+
+**Examples:**
+```javascript
+// Small image
+${createImage('/photos/icon.png', 'Icon', '', 'small')}
+
+// Medium (default) - can omit size parameter
+${createImage('/photos/screenshot.png', 'Screenshot', 'Main dashboard')}
+
+// Large image for detailed view
+${createImage('/photos/detailed.png', 'Details', 'Full configuration', 'large')}
+
+// Full size
+${createImage('/photos/banner.png', 'Banner', '', 'full')}
+```
+
+- **Place images in:** `public/photos/` folder (NOT src/photos/)
+- All images automatically maintain aspect ratio
 - Consistent styling across all posts
 
 ### 2. Highlight Boxes
@@ -164,7 +185,7 @@ Use ${createInlineCode('inline code')} in your sentences.
 cd my-app
 npm start`, 'bash')}
 
-    ${createImage('/Art/react-logo.png', 'React logo', 'The official React logo')}
+    ${createImage('/photos/react-logo.png', 'React logo', 'The official React logo')}
 
     <h2>project structure</h2>
     
