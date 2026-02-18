@@ -5,8 +5,18 @@ const Home = () => {
   const [displayText, setDisplayText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [linuxTheme, setLinuxTheme] = useState(false);
+  const [selectedLink, setSelectedLink] = useState(0);
+  const [showBackButton, setShowBackButton] = useState(false);
   // const fullText = "print('hey there, iamsarthak')";
   const fullText = ">> Hello, i am sarthak.";
+  
+  const links = [
+    { href: 'https://github.com/sarthakk27', text: 'github', external: true },
+    { href: '/art', text: 'Art', external: false },
+    { href: '/movies', text: 'Interest in movies', external: false },
+    { href: '/projects', text: 'Projects', external: false },
+    { href: '/blog', text: 'Blog', external: false }
+  ];
   
   useEffect(() => {
     let currentIndex = 0;
@@ -31,15 +41,54 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    // Check if there's navigation history
+    const hasHistory = window.history.length > 1;
+    setShowBackButton(hasHistory);
+
+    // Listen for navigation events
+    const handleNavigation = () => {
+      setShowBackButton(window.history.length > 1);
+    };
+
+    window.addEventListener('popstate', handleNavigation);
+    return () => window.removeEventListener('popstate', handleNavigation);
+  }, []);
+
+  useEffect(() => {
     const handleKeyPress = (e) => {
       if (e.key === 'l' || e.key === 'L') {
         setLinuxTheme(prev => !prev);
+      }
+      
+      // Backspace to go back
+      if (e.key === 'Backspace' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        window.history.back();
+      }
+      
+      // Arrow key navigation in Linux theme
+      if (linuxTheme) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          setSelectedLink(prev => (prev + 1) % links.length);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          setSelectedLink(prev => (prev - 1 + links.length) % links.length);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const link = links[selectedLink];
+          if (link.external) {
+            window.open(link.href, '_blank');
+          } else {
+            window.location.href = link.href;
+          }
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
+  }, [linuxTheme, selectedLink]);
 
   const renderTypedText = () => {
     const text = displayText;
@@ -69,7 +118,16 @@ const Home = () => {
 
   return (
     <div className={`home-container ${linuxTheme ? 'linux-theme' : ''}`}>
-      <div className="hint-text">Press the s key on the keyboard | Press L for Linux theme</div>
+      {showBackButton && (
+        <button className="back-button" onClick={() => window.history.back()} title="Go back (or press Backspace)">
+          ← Back
+        </button>
+      )}
+      <div className="hint-text">
+        Press the s key on the keyboard <br/> Press L for Linux theme <br/>
+        {linuxTheme && 'Use ↑↓ arrows to navigate, Enter to select <br/>'}
+        {showBackButton && 'Press Backspace to go back'}
+      </div>
       <p id="greeting" className="terminal-text">
         {renderTypedText()}
         <span className={`cursor ${showCursor ? 'visible' : ''}`}>_</span>
@@ -91,22 +149,21 @@ const Home = () => {
       </span>
       <br />
       <br />
-      <a
-        href="https://github.com/sarthakk27"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        github
-      </a>
-      <br />
-      <br />
-      <a href="/art">Art</a>
-      <br />
-      <br />
-      <a href="/movies">Interest in movies</a>
-      <br />
-      <br />
-      <a href="/projects">Projects</a>
+      {links.map((link, index) => (
+        <React.Fragment key={link.href}>
+          <a
+            href={link.href}
+            target={link.external ? "_blank" : undefined}
+            rel={link.external ? "noopener noreferrer" : undefined}
+            className={linuxTheme && selectedLink === index ? 'selected-link' : ''}
+          >
+            {linuxTheme && selectedLink === index && '> '}
+            {link.text}
+          </a>
+          <br />
+          <br />
+        </React.Fragment>
+      ))}
     </div>
   );
 };

@@ -88,6 +88,19 @@ a {
   color: #00ff00;
 }
 
+.home-container.linux-theme .selected-link {
+  background-color: #00ff00;
+  color: #0c0c0c;
+  padding: 2px 4px;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.home-container.linux-theme .selected-link:hover {
+  background-color: #33ff33;
+  color: #0c0c0c;
+}
+
 .hint-text {
   position: absolute;
   top: 20px;
@@ -96,3 +109,40 @@ a {
   color: #666;
   font-style: italic;
 }
+
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+  transform: translateX(-3px);
+}
+
+.back-button:active {
+  transform: translateX(-3px) scale(0.95);
+}
+
+.home-container.linux-theme .back-button {
+  background-color: #0c0c0c;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  font-family: 'Courier New', 'Consolas', monospace;
+}
+
+.home-container.linux-theme .back-button:hover {
+  background-color: #00ff00;
+  color: #0c0c0c;
+}
+
