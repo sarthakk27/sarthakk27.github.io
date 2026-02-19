@@ -114,13 +114,13 @@ export const blogPosts = [
       <p>and search for:</p>
       ${createCodeBlock(`SQLServerManager`, 'text')}
       
-      <p>now, you will see this interface:</p> 
-      ${createImage('/photos/sqlServerManagerConfig.png', 'SQL Server Configuration Manager interface', 'SQL Server Configuration Manager showing network configuration options')}
+      <p>Open the SQL Server Configuration Manager. now, you will see this interface:</p> 
+      ${createImage('/photos/sqlServerManagerConfig.png', 'SQL Server Configuration Manager interface', 'SQL Server Configuration Manager showing network configuration options','small')}
         
       <p>go to 'Protocols for MSSQLServer'</p> 
       <h2>step 2: Disable  Shared Memory</h2>
       <p>Shared Memory protocol is enabled by default, but it can cause connection issues with Pentaho. To ensure a successful connection, we need to disable the Shared Memory protocol. Select Shared Memory and right click it to disable it</p>
-      ${createImage('/photos/sharedMemory.png', 'Shared Memory Protocol', 'Disable Shared Memory protocol')}
+      ${createImage('/photos/sharedMemory.png', 'Shared Memory Protocol', 'Disable Shared Memory protocol','medium')}
     
 
       <h2>step 3: Enable TCP/IP Protocol</h2>
@@ -132,17 +132,53 @@ export const blogPosts = [
 
       <h2>step 4: Restart SQL Server Services</h2>
       <p>After making these changes, we need to restart the SQL Server services for the changes to take effect. In the SQL Server Configuration Manager, go to <strong>'SQL Server Services'</strong>. Right click on <strong>'SQL Server (MSSQLSERVER)'</strong> and select <strong>'Restart'</strong>.</p>
-      ${createImage('/photos/restartServices.png', 'Restart SQL Server Services', 'Restart SQL Server and SQL Server Browser services')}
+      ${createImage('/photos/restartServices.png', 'Restart SQL Server Services', 'Restart SQL Server')}
      
      
       <h2>step 5: Create a SQL Server User</h2>     
+      <p>To connect Pentaho to SQL Server, we need to create a SQL Server user with the appropriate permissions. Open SQL Server Management Studio and connect to your SQL Server instance. In the Object Explorer, right click the server and choose <strong>'Properties'</strong>. In the Server Properties window, go to the <strong>'Security'</strong> page and select <strong>'SQL Server and Windows Authentication mode'</strong>. Click <strong>OK</strong> to save the changes.</p>
+      ${createImage('/photos/authenticationMode.png', 'Authentication Mode', )}
+      ${createImage('/photos/serverProperties.png', 'Server Properties', 'Set authentication mode to SQL Server and Windows Authentication')}
 
-      <h2>step 2: installing the jdbc driver in pentaho</h2>
+      
+      <p>Create a User and Grant the permissions using below queries:</p>
+      ${createSQLQuery(`CREATE LOGIN pentaho_user
+  WITH PASSWORD = 'Pentaho@123',
+  CHECK_POLICY = OFF;
+  GO
+  
+  
+  ALTER LOGIN pentaho_user ENABLE;
+  GO
+  
+  --Replace User name and password according to you`, 'sql')}
+  
+  ${createSQLQuery(`USE test_db;
+    GO
+    CREATE USER pentaho_user FOR LOGIN pentaho_user;
+ALTER ROLE db_owner ADD MEMBER pentaho_user;
+GO
+
+--Replace test_db with your database name and pentaho_user with your user name`, 'sql')}
+
+
+
+    <br>
+    <p>Now, restart SQL Server Management Studio and Select <strong>'SQl Server Authentication' and then enter the User Name and Password and connect</strong></p>
+    ${createImage('/photos/connectToSqlServer.png', 'Connect to SQL Server', 'Connect using SQL Server Authentication')}
+
+      <h2>step 6: installing the jdbc driver in pentaho</h2>
+            
+      <p><strong>Note:</strong> The JDBC driver is a .jar file that allows Pentaho to communicate with SQL Server. You can download the Microsoft JDBC Driver for SQL Server from the official Microsoft website.</p>
+      links to download the driver:
+      <br>
+      <a href="https://learn.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server" target="_blank" rel="noopener noreferrer">Microsoft JDBC Driver for SQL Server</a></li> <br>
+      <a href="https://go.microsoft.com/fwlink/?linkid=2338346" target="_blank" rel="noopener noreferrer">Direct Download Link</a>
+      <p>mssql-jdbc-13.2.1.jre11.jar</p>
       
       <p>
         place the jdbc driver in the correct pentaho directory:
       </p>
-
       <ul>
         <li>locate your pentaho installation directory</li>
         <li>navigate to the lib folder: ${createInlineCode('/data-integration/lib')}</li>
@@ -150,7 +186,18 @@ export const blogPosts = [
         <li>restart pentaho spoon after copying the driver</li>
       </ul>
 
-      ${createHighlight('⚠️ <strong>Important:</strong> You must restart Pentaho Spoon after adding the JDBC driver for it to be recognized.', 'warning')}
+      ${createHighlight('<strong>Important:</strong> You must restart Pentaho Spoon after adding the JDBC driver for it to be recognized.', 'warning')}
+
+      <h2>step 7: Add JAVA path in System Environment Variables</h2>
+      <p>Ensure that the JAVA_HOME environment variable is set correctly:</p>
+      <ul>
+        <li>Open System Properties (Right-click "This PC" > Properties > Advanced System Settings)</li>
+        <li>Click "Environment Variables"</li>
+        <li>In the "System Variables" section, click "New"</li>
+        <li>Set the variable name to "JAVA_HOME"</li>
+        <li>Set the variable value to your Java installation path (e.g., C:\Program Files\Java\jdk-11)</li>
+        <li>Click OK to save</li>
+      </ul>
 
       <h2>step 3: configuring the database connection</h2>
       
